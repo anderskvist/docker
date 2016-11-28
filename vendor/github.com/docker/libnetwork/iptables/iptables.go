@@ -281,6 +281,7 @@ func (c *ChainInfo) Link(action Action, ip1, ip2 net.IP, port int, proto string,
 // rule is not already present in the chain. Reciprocally,
 // it removes the rule only if present.
 func ProgramRule(table Table, chain string, action Action, args []string) error {
+	args = append(args, "-m comment --comment 'Managed by docker'")
 	if Exists(table, chain, args...) != (action == Delete) {
 		return nil
 	}
